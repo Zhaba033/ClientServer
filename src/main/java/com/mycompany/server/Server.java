@@ -15,12 +15,16 @@ public class Server {
         debug("Preparing to start...");
         int p = 11111;
         debug("Port: " + p);
-        try (ServerSocket serverSocket = new ServerSocket(p)) {
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                String clientAddress = clientSocket.getInetAddress().getHostAddress();
-                debug("New connection with client: " + clientAddress);
-                ConnectionProcessing.newConnection(clientSocket, clientAddress);
+        while (true) {
+            try (ServerSocket serverSocket = new ServerSocket(p)) {
+                while (true) {
+                    Socket clientSocket = serverSocket.accept();
+                    String clientAddress = clientSocket.getInetAddress().getHostAddress();
+                    debug("New connection with client: " + clientAddress);
+                    ConnectionProcessing.newConnection(clientSocket, clientAddress);
+                }
+            } catch (Exception e) {
+                debug(e.getMessage());
             }
         }
     }

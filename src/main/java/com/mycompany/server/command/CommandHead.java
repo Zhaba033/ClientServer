@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHead {
-    IsFileExistsCommand ists = new IsFileExistsCommand();
+    IsFileExistsCommand ifec = new IsFileExistsCommand();
+    GetFileCommand gfc = new GetFileCommand();
     
     
     Map<String, AbstractCommand> commands = new HashMap<>(Map.of(
-            "isExists", ists
+            "isExists", ifec,
+            "getFile", gfc
     ));
     
     
@@ -18,7 +20,7 @@ public class CommandHead {
         String[] requestList = request.split("[ ]");
         
         if (requestList.length > 1) {
-            response = commands.get(requestList[0]).input(requestList[1]);
+            response = commands.get(requestList[0]).run(requestList[1]);
         }
         
         return response;
